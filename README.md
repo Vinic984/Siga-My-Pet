@@ -95,7 +95,9 @@ Para alterar cores e estilos, modifique o `tailwind.config.js` e os estilos em `
 <img width="1919" height="938" alt="image" src="https://github.com/user-attachments/assets/4368c202-0774-449e-b49a-8228b44a8622" />
 
 
-<img width="1919" height="891" alt="image" src="https://github.com/user-attachments/assets/4c0494b8-0e41-4896-a885-770dfef01acd" />
+
+<img width="1919" height="946" alt="image" src="https://github.com/user-attachments/assets/1a1a6575-178b-4b7a-8c9d-7f1bb789dcf2" />
+
 
 
 <img width="1919" height="940" alt="image" src="https://github.com/user-attachments/assets/d9bc5608-c6f9-4da5-809a-90b6f3c77587" />
