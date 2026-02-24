@@ -26,6 +26,7 @@ body {
   transform: scale(1.1);
 }
 
+/* cat animations remain unchanged */
 .cat-animation {
   animation: bounce 2s infinite;
 }
@@ -68,5 +69,45 @@ body {
   }
   75% {
     transform: translateX(5px);
+  }
+}
+
+/* dog animations added below */
+.dog-animation {
+  animation: wag 2s infinite;
+}
+
+@keyframes wag {
+  0%, 100% {
+    transform: rotate(0);
+  }
+  50% {
+    transform: rotate(10deg);
+  }
+}
+
+.dog-sad {
+  animation: headdrop 3s infinite;
+}
+
+@keyframes headdrop {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(10px);
+  }
+}
+
+.dog-angry {
+  animation: bark 0.5s infinite;
+}
+
+@keyframes bark {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  25%, 75% {
+    transform: translateY(-5px);
   }
 }

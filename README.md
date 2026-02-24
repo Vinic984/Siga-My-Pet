@@ -9,7 +9,7 @@ Uma landing page interativa que mostra o humor de pets através de um mapa com p
 - **Pins Coloridos**: Verde para feliz, azul para triste, vermelho para com raiva
 - **Popups Informativos**: Ao clicar nos pins, exibe mensagens sobre o humor do pet
 - **Painel de Detalhes**: Atualiza com informações completas do pet selecionado
-- **Gato Animado**: Reage ao humor do pet selecionado com animações CSS
+- **Animação do Animal**: Um avatar (gato ou cachorro) reage ao humor do pet selecionado com animações CSS
 - **Design Responsivo**: Funciona perfeitamente em desktop e mobile
 - **Cores Pastéis**: Design moderno e amigável com paleta de cores suaves
 
@@ -57,12 +57,12 @@ O mapa está centralizado em São Paulo, com 6 pets distribuídos pela região:
 - **Mel** (Triste) - Zona leste
 - **Thor** (Com raiva) - Região central
 
-## 🎭 Animações do Gato
+## 🎭 Animações dos Pets
 
-O gato animado reage conforme o humor do pet selecionado:
-- **Feliz**: Animação de pulo (bounce)
-- **Triste**: Animação de balanço (sway)
-- **Com raiva**: Animação de tremor (shake)
+O avatar do animal exibido (gato ou cachorro) reage conforme o humor do pet selecionado:
+- **Feliz**: Animação de pulo (bounce para gato) ou abanando o rabo (wag para cachorro)
+- **Triste**: Animação de balanço (sway para gato) ou inclinando a cabeça (headdrop para cachorro)
+- **Com raiva**: Animação de tremor (shake para gato) ou pulando como se latisse (bark para cachorro)
 
 ## 🎨 Cores e Design
 

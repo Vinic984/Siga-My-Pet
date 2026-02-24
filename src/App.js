@@ -1,9 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import './index.css';
-import { Cat, Dog, Heart, Frown, Angry } from 'lucide-react';
 
 // Fix for default markers in react-leaflet
 delete L.Icon.Default.prototype._getIconUrl;
@@ -95,33 +94,60 @@ const createCustomIcon = (type, mood) => {
 
 function App() {
   const [selectedPet, setSelectedPet] = useState(null);
-  const [catMood, setCatMood] = useState('happy');
+  const [petMood, setPetMood] = useState('happy');
 
   const handlePetClick = (pet) => {
     setSelectedPet(pet);
-    setCatMood(pet.mood);
+    setPetMood(pet.mood);
   };
 
-  const getCatAnimation = () => {
-    switch(catMood) {
-      case 'happy': return 'cat-animation';
-      case 'sad': return 'cat-sad';
-      case 'angry': return 'cat-angry';
-      default: return 'cat-animation';
+  const getAnimalAnimation = () => {
+    // return CSS class according to type and mood
+    const type = selectedPet?.type || 'cat';
+    const mood = petMood;
+    if (type === 'cat') {
+      switch(mood) {
+        case 'happy': return 'cat-animation';
+        case 'sad': return 'cat-sad';
+        case 'angry': return 'cat-angry';
+        default: return 'cat-animation';
+      }
+    } else {
+      switch(mood) {
+        case 'happy': return 'dog-animation';
+        case 'sad': return 'dog-sad';
+        case 'angry': return 'dog-angry';
+        default: return 'dog-animation';
+      }
     }
   };
 
-  const getCatEmoji = () => {
-    switch(catMood) {
-      case 'happy': return '😸';
-      case 'sad': return '😿';
-      case 'angry': return '😾';
-      default: return '😸';
+  const getAnimalEmoji = () => {
+    const type = selectedPet?.type || 'cat';
+    const mood = petMood;
+
+    if (type === 'cat') {
+      switch(mood) {
+        case 'happy': return '😸';
+        case 'sad': return '😿';
+        case 'angry': return '😾';
+        default: return '😸';
+      }
+    } else {
+      // dogs always show the same face; moods handled by CSS animation only
+      return '🐶';
     }
   };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-pastel-blue to-pastel-pink p-4">
+      {/* Overlay para forçar orientação horizontal em celulares */}
+      <div className="fixed inset-0 z-[9999] bg-gray-900/95 text-white flex flex-col items-center justify-center p-6 text-center md:hidden portrait:flex hidden">
+        <div className="text-6xl mb-4 animate-bounce">🔄</div>
+        <h2 className="text-2xl font-bold mb-2">Gire seu celular</h2>
+        <p className="text-gray-200">Para melhor visualização do mapa, utilize o aparelho na horizontal.</p>
+      </div>
+
       <div className="max-w-7xl mx-auto">
         <header className="text-center mb-6">
           <h1 className="text-4xl font-bold text-gray-800 mb-2">🐾 SigaMyPet 🐾</h1>
@@ -165,14 +191,18 @@ function App() {
 
           <div className="lg:col-span-1">
             <div className="bg-white rounded-2xl p-6 shadow-xl mb-4">
-              <h3 className="text-lg font-semibold text-gray-800 mb-4 text-center">Gato Animado</h3>
+                <h3 className="text-lg font-semibold text-gray-800 mb-4 text-center">
+                {selectedPet?.type === 'dog' ? 'Cachorro Animado' : 'Gato Animado'}
+              </h3>
               <div className="flex justify-center">
-                <div className={`text-8xl ${getCatAnimation()}`}>
-                  {getCatEmoji()}
+                <div className={`text-8xl ${getAnimalAnimation()}`}>
+                  {getAnimalEmoji()}
                 </div>
               </div>
               <p className="text-center text-gray-600 mt-4 text-sm">
-                O gato reage ao humor do pet selecionado!
+                {selectedPet?.type === 'dog'
+                  ? 'O cachorro reage ao humor do pet selecionado!'
+                  : 'O gato reage ao humor do pet selecionado!'}
               </p>
             </div>
 

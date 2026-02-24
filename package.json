@@ -12,7 +12,7 @@
     "react-scripts": "^5.0.1",
     "tailwindcss": "^3.4.0"
   },
-  "name": "sigamypet",
+  "name": "siga-my-pet",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
