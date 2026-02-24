@@ -91,3 +91,5 @@ sigamypet/
 Para adicionar mais pets ou modificar localizações, edite o array `pets` no arquivo `src/App.js`.
 
 Para alterar cores e estilos, modifique o `tailwind.config.js` e os estilos em `src/index.css`.
+
+<img width="1919" height="938" alt="image" src="https://github.com/user-attachments/assets/4368c202-0774-449e-b49a-8228b44a8622" />
