@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
@@ -95,10 +95,43 @@ const createCustomIcon = (type, mood) => {
 const DirectMap = () => {
   const [selectedPet, setSelectedPet] = useState(null);
   const [petMood, setPetMood] = useState('happy');
+  const mapRef = useRef(null);
 
   const handlePetClick = (pet) => {
     setSelectedPet(pet);
     setPetMood(pet.mood);
+    
+    // Auto-pan suave para evitar que o popup cubra controles
+    if (mapRef.current) {
+      const map = mapRef.current;
+      const petPosition = L.latLng(pet.position);
+      
+      // Calcula offset para não cobrir controles
+      const offset = window.innerWidth < 1024 ? [0, -100] : [50, -50];
+      
+      map.panTo(petPosition, {
+        animate: true,
+        duration: 0.5,
+        easeLinearity: 0.5
+      });
+    }
+  };
+
+  const handlePopupClick = (e) => {
+    // Prevenir event bubbling
+    e.stopPropagation();
+    e.originalEvent?.stopPropagation();
+  };
+
+  const resetMap = () => {
+    if (mapRef.current) {
+      const map = mapRef.current;
+      map.setView([-23.5505, -46.6333], 13, {
+        animate: true,
+        duration: 0.5
+      });
+      setSelectedPet(null);
+    }
   };
 
   const getAnimalAnimation = () => {
@@ -153,6 +186,12 @@ const DirectMap = () => {
                 zoom={13} 
                 style={{ height: '100%', width: '100%', borderRadius: '0.75rem 1rem' }}
                 className="flex-1"
+                ref={mapRef}
+                whenCreated={(map) => {
+                  mapRef.current = map;
+                  // Configurar opções de popup para melhor controle
+                  map.options.closePopupOnClick = false;
+                }}
               >
                   <TileLayer
                     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -167,12 +206,34 @@ const DirectMap = () => {
                         click: () => handlePetClick(pet)
                       }}
                     >
-                      <Popup>
-                        <div className="text-center p-2">
-                          <div className="text-2xl mb-1">
+                      <Popup 
+                        autoPan={false}
+                        closeButton={true}
+                        minWidth={200}
+                        maxWidth={250}
+                        className="custom-popup"
+                      >
+                        <div 
+                          className="popup-content text-center p-3 cursor-default"
+                          onClick={handlePopupClick}
+                          onMouseDown={handlePopupClick}
+                        >
+                          <div className="text-2xl mb-2">
                             {pet.type === 'cat' ? '🐱' : '🐶'}
                           </div>
-                          <p className="font-semibold text-gray-800">{pet.message}</p>
+                          <p className="font-semibold text-gray-800 text-sm mb-1">{pet.name}</p>
+                          <p className="text-xs text-gray-600 leading-relaxed">{pet.message}</p>
+                          <div className="mt-2 pt-2 border-t border-gray-200">
+                            <span className={`inline-block px-2 py-1 rounded-full text-xs font-medium ${
+                              pet.mood === 'happy' ? 'bg-green-100 text-green-800' :
+                              pet.mood === 'sad' ? 'bg-blue-100 text-blue-800' :
+                              'bg-red-100 text-red-800'
+                            }`}>
+                              {pet.mood === 'happy' ? '😊 Feliz' :
+                               pet.mood === 'sad' ? '😢 Triste' :
+                               '😠 Com raiva'}
+                            </span>
+                          </div>
                         </div>
                       </Popup>
                     </Marker>
@@ -187,7 +248,7 @@ const DirectMap = () => {
                 {selectedPet?.type === 'dog' ? 'Cachorro Animado' : 'Gato Animado'}
               </h3>
               <div className="flex justify-center">
-                <div className={`text-4xl sm:text-8xl ${getAnimalAnimation()}`}>
+                <div className={`text-4xl sm:text-8xl pet-emoji ${getAnimalAnimation()}`}>
                   {getAnimalEmoji()}
                 </div>
               </div>
@@ -218,8 +279,19 @@ const DirectMap = () => {
           </div>
         </div>
 
+        {/* Botões flutuantes com z-index alto */}
+        <div className="floating-controls">
+          <button
+            onClick={resetMap}
+            className="floating-control-btn"
+            title="Redefinir mapa"
+          >
+            🔄
+          </button>
+        </div>
+
         {selectedPet && (
-          <div className="mt-3 sm:mt-6 bg-white rounded-xl sm:rounded-2xl p-3 sm:p-6 shadow-xl shrink-0">
+          <div className="mt-3 sm:mt-6 bg-white rounded-xl sm:rounded-2xl p-3 sm:p-6 shadow-xl shrink-0 info-section">
             <h2 className="text-lg sm:text-2xl font-bold text-gray-800 mb-2 sm:mb-4">
               {selectedPet.type === 'cat' ? '🐱' : '🐶'} {selectedPet.name}
             </h2>

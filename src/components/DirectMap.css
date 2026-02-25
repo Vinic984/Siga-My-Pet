@@ -1,4 +1,4 @@
-/* CSS customizado para responsividade do DirectMap */
+/* CSS customizado para responsividade e interação do DirectMap */
 
 /* Container principal com viewport height */
 .direct-map-container {
@@ -12,6 +12,73 @@
 .leaflet-container {
   height: 100% !important;
   width: 100% !important;
+}
+
+/* Z-Index e Layering - Controles sempre acima */
+.leaflet-control-container {
+  z-index: 1000 !important;
+}
+
+.leaflet-top,
+.leaflet-bottom {
+  z-index: 1001 !important;
+}
+
+.leaflet-control-zoom,
+.leaflet-control-attribution {
+  z-index: 1002 !important;
+}
+
+/* Pop-ups com z-index controlado */
+.leaflet-popup {
+  z-index: 999 !important;
+}
+
+.leaflet-popup-content-wrapper {
+  z-index: 999 !important;
+}
+
+.leaflet-popup-content {
+  z-index: 999 !important;
+}
+
+/* Scroll independente para área de informações */
+.info-section {
+  overflow-y: auto;
+  max-height: 40vh;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(156, 163, 175, 0.5) transparent;
+}
+
+.info-section::-webkit-scrollbar {
+  width: 6px;
+}
+
+.info-section::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.info-section::-webkit-scrollbar-thumb {
+  background-color: rgba(156, 163, 175, 0.5);
+  border-radius: 3px;
+}
+
+/* Compactação em telas pequenas ou zoom alto */
+@media (max-width: 1024px), (min-resolution: 120dpi) {
+  .side-cards {
+    flex-direction: row !important;
+    gap: 0.75rem;
+  }
+  
+  .side-cards > div {
+    flex: 1;
+    min-width: 280px;
+    max-width: 320px;
+  }
+  
+  .pet-emoji {
+    font-size: 3rem !important;
+  }
 }
 
 /* Animações dos pets */
@@ -85,6 +152,10 @@
   .legend-item {
     font-size: 0.75rem;
   }
+  
+  .info-section {
+    max-height: 35vh;
+  }
 }
 
 @media (min-width: 1024px) and (max-width: 1279px) {
@@ -114,4 +185,83 @@
   .map-wrapper {
     max-height: calc(100vh - 250px);
   }
+}
+
+/* Prevenir event bubbling em pop-ups */
+.popup-content {
+  pointer-events: auto;
+  user-select: text;
+}
+
+.leaflet-popup-content {
+  pointer-events: auto;
+}
+
+/* Estilos customizados para pop-ups */
+.custom-popup .leaflet-popup-content-wrapper {
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+  padding: 0;
+}
+
+.custom-popup .leaflet-popup-content {
+  margin: 0;
+  min-width: 200px;
+}
+
+.custom-popup .leaflet-popup-close-button {
+  color: #6b7280;
+  font-size: 20px;
+  line-height: 20px;
+  padding: 8px;
+  right: 8px;
+  top: 8px;
+}
+
+.custom-popup .leaflet-popup-close-button:hover {
+  color: #374151;
+}
+
+/* Botões flutuantes personalizados */
+.floating-controls {
+  position: fixed;
+  top: 50%;
+  right: 20px;
+  transform: translateY(-50%);
+  z-index: 1003;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.floating-control-btn {
+  background: white;
+  border: none;
+  border-radius: 8px;
+  padding: 0.5rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  z-index: 1003;
+}
+
+.floating-control-btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+
+/* Overlay para prevenir cliques indesejados */
+.map-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.map-overlay.active {
+  pointer-events: auto;
+  background: rgba(0,0,0,0.1);
 }
