@@ -63,21 +63,124 @@
   border-radius: 3px;
 }
 
-/* Compactação em telas pequenas ou zoom alto */
-@media (max-width: 1024px), (min-resolution: 120dpi) {
-  .side-cards {
+/* Compactação de componentes para melhor usabilidade */
+
+/* Gato Animado - 30% menor */
+.pet-info-card {
+  padding: 1rem !important;
+}
+
+.pet-emoji {
+  font-size: 3rem !important; /* Reduzido de 4rem/8rem */
+}
+
+.pet-info-card h3 {
+  font-size: 0.875rem !important; /* text-sm */
+  margin-bottom: 0.75rem !important;
+}
+
+.pet-info-card p {
+  font-size: 0.75rem !important; /* text-xs */
+  margin-top: 0.75rem !important;
+}
+
+/* Legenda compacta */
+.legend-compact {
+  padding: 1rem !important;
+}
+
+.legend-compact h3 {
+  font-size: 0.875rem !important; /* text-sm */
+  margin-bottom: 0.75rem !important;
+}
+
+.legend-compact .legend-item {
+  font-size: 0.75rem !important; /* text-xs */
+}
+
+.legend-compact .legend-color {
+  width: 0.5rem !important; /* w-2 */
+  height: 0.5rem !important; /* h-2 */
+}
+
+/* Layout lado a lado para economizar espaço */
+@media (min-width: 768px), (min-resolution: 120dpi) {
+  .side-cards-compact {
     flex-direction: row !important;
-    gap: 0.75rem;
+    gap: 1rem !important;
   }
   
-  .side-cards > div {
+  .side-cards-compact > div {
     flex: 1;
-    min-width: 280px;
-    max-width: 320px;
+    min-width: 200px;
+    max-width: 280px;
   }
   
   .pet-emoji {
-    font-size: 3rem !important;
+    font-size: 2.5rem !important;
+  }
+}
+
+/* Área de informações com scroll limitado */
+.pet-details-section {
+  max-height: 25vh !important;
+  overflow-y: auto !important;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(156, 163, 175, 0.3) transparent;
+}
+
+.pet-details-section::-webkit-scrollbar {
+  width: 4px;
+}
+
+.pet-details-section::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.pet-details-section::-webkit-scrollbar-thumb {
+  background-color: rgba(156, 163, 175, 0.3);
+  border-radius: 2px;
+}
+
+/* Prevenir sobreposição de cliques */
+.compact-card {
+  position: relative;
+  z-index: 10;
+}
+
+.compact-card::before {
+  content: '';
+  position: absolute;
+  top: -4px;
+  left: -4px;
+  right: -4px;
+  bottom: -4px;
+  z-index: -1;
+  pointer-events: none;
+}
+
+/* Prioridade de clique para controles do mapa */
+.leaflet-control-container {
+  z-index: 1000 !important;
+}
+
+.compact-cards-container {
+  z-index: 50 !important;
+}
+
+/* Ajustes para telas pequenas */
+@media (max-width: 767px) {
+  .side-cards-compact {
+    flex-direction: column !important;
+    gap: 0.75rem !important;
+  }
+  
+  .pet-emoji {
+    font-size: 2rem !important;
+  }
+  
+  .pet-details-section {
+    max-height: 30vh !important;
   }
 }
 

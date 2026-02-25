@@ -171,14 +171,14 @@ const DirectMap = () => {
   };
 
   return (
-    <div className="direct-map-container min-h-screen bg-gradient-to-br from-pastel-blue to-pastel-pink p-2 sm:p-4">
+    <div className="direct-map-container min-h-screen bg-gradient-to-br from-pastel-blue to-pastel-pink p-1 sm:p-4">
       <div className="max-w-7xl mx-auto h-full flex flex-col">
-        <header className="text-center mb-4 sm:mb-6 shrink-0">
-          <h1 className="text-2xl sm:text-4xl font-bold text-gray-800 mb-1 sm:mb-2">🐾 SigaMyPet 🐾</h1>
-          <p className="text-sm sm:text-base text-gray-600">Descubra o humor dos pets pelo mapa interativo</p>
+        <header className="text-center mb-3 sm:mb-6 shrink-0">
+          <h1 className="text-xl sm:text-4xl font-bold text-gray-800 mb-1 sm:mb-2">🐾 SigaMyPet 🐾</h1>
+          <p className="text-xs sm:text-base text-gray-600">Descubra o humor dos pets pelo mapa interativo</p>
         </header>
 
-        <div className="flex-1 grid grid-cols-1 xl:grid-cols-4 gap-3 sm:gap-6 min-h-0">
+        <div className="flex-1 grid grid-cols-1 xl:grid-cols-4 gap-2 sm:gap-6 min-h-0">
           <div className="xl:col-span-3 flex flex-col min-h-0">
             <div className="bg-white rounded-xl sm:rounded-2xl p-2 sm:p-4 shadow-xl flex-1 flex flex-col min-h-0 map-wrapper">
               <MapContainer 
@@ -242,13 +242,13 @@ const DirectMap = () => {
             </div>
           </div>
 
-          <div className="xl:col-span-1 flex flex-col lg:flex-row xl:flex-col gap-3 sm:gap-4 side-cards">
-            <div className="bg-white rounded-xl sm:rounded-2xl p-3 sm:p-6 shadow-xl flex-1 lg:max-w-xs xl:max-w-none pet-info-card">
+          <div className="xl:col-span-1 flex flex-col lg:flex-row xl:flex-col gap-2 sm:gap-4 side-cards-compact compact-cards-container">
+            <div className="bg-white rounded-xl sm:rounded-2xl p-3 sm:p-6 shadow-xl flex-1 lg:max-w-xs xl:max-w-none pet-info-card compact-card">
               <h3 className="text-sm sm:text-lg font-semibold text-gray-800 mb-2 sm:mb-4 text-center">
                 {selectedPet?.type === 'dog' ? 'Cachorro Animado' : 'Gato Animado'}
               </h3>
               <div className="flex justify-center">
-                <div className={`text-4xl sm:text-8xl pet-emoji ${getAnimalAnimation()}`}>
+                <div className={`text-3xl sm:text-6xl lg:text-4xl xl:text-6xl pet-emoji ${getAnimalAnimation()}`}>
                   {getAnimalEmoji()}
                 </div>
               </div>
@@ -259,19 +259,19 @@ const DirectMap = () => {
               </p>
             </div>
 
-            <div className="bg-white rounded-xl sm:rounded-2xl p-3 sm:p-6 shadow-xl flex-1 lg:max-w-xs xl:max-w-none">
+            <div className="bg-white rounded-xl sm:rounded-2xl p-3 sm:p-6 shadow-xl flex-1 lg:max-w-xs xl:max-w-none legend-compact compact-card">
               <h3 className="text-sm sm:text-lg font-semibold text-gray-800 mb-2 sm:mb-4">Legenda</h3>
-              <div className="space-y-1 sm:space-y-2">
+              <div className="space-y-1 sm:space-y-2 flex flex-col sm:block">
                 <div className="flex items-center gap-2 legend-item">
-                  <div className="w-3 sm:w-4 h-3 sm:h-4 bg-green-500 rounded-full"></div>
+                  <div className="w-2 sm:w-4 h-2 sm:h-4 bg-green-500 rounded-full legend-color"></div>
                   <span className="text-xs sm:text-sm text-gray-600">Feliz 😊</span>
                 </div>
                 <div className="flex items-center gap-2 legend-item">
-                  <div className="w-3 sm:w-4 h-3 sm:h-4 bg-blue-500 rounded-full"></div>
+                  <div className="w-2 sm:w-4 h-2 sm:h-4 bg-blue-500 rounded-full legend-color"></div>
                   <span className="text-xs sm:text-sm text-gray-600">Triste 😢</span>
                 </div>
                 <div className="flex items-center gap-2 legend-item">
-                  <div className="w-3 sm:w-4 h-3 sm:h-4 bg-red-500 rounded-full"></div>
+                  <div className="w-2 sm:w-4 h-2 sm:h-4 bg-red-500 rounded-full legend-color"></div>
                   <span className="text-xs sm:text-sm text-gray-600">Com raiva 😠</span>
                 </div>
               </div>
@@ -291,14 +291,14 @@ const DirectMap = () => {
         </div>
 
         {selectedPet && (
-          <div className="mt-3 sm:mt-6 bg-white rounded-xl sm:rounded-2xl p-3 sm:p-6 shadow-xl shrink-0 info-section">
+          <div className="mt-2 sm:mt-6 bg-white rounded-xl sm:rounded-2xl p-3 sm:p-6 shadow-xl shrink-0 pet-details-section">
             <h2 className="text-lg sm:text-2xl font-bold text-gray-800 mb-2 sm:mb-4">
               {selectedPet.type === 'cat' ? '🐱' : '🐶'} {selectedPet.name}
             </h2>
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 sm:gap-4">
               <div>
                 <h3 className="font-semibold text-gray-700 mb-1 sm:mb-2 text-sm sm:text-base">Informações:</h3>
-                <p className="text-xs sm:text-sm text-gray-600">{selectedPet.description}</p>
+                <p className="text-xs sm:text-sm text-gray-600 leading-relaxed">{selectedPet.description}</p>
               </div>
               <div>
                 <h3 className="font-semibold text-gray-700 mb-1 sm:mb-2 text-sm sm:text-base">Humor atual:</h3>
