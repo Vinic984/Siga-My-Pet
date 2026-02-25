@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
+import './DirectMap.css';
 
 // Fix for default markers in react-leaflet
 delete L.Icon.Default.prototype._getIconUrl;
@@ -137,20 +138,21 @@ const DirectMap = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-pastel-blue to-pastel-pink p-4">
-      <div className="max-w-7xl mx-auto">
-        <header className="text-center mb-6">
-          <h1 className="text-4xl font-bold text-gray-800 mb-2">🐾 SigaMyPet 🐾</h1>
-          <p className="text-gray-600">Descubra o humor dos pets pelo mapa interativo</p>
+    <div className="direct-map-container min-h-screen bg-gradient-to-br from-pastel-blue to-pastel-pink p-2 sm:p-4">
+      <div className="max-w-7xl mx-auto h-full flex flex-col">
+        <header className="text-center mb-4 sm:mb-6 shrink-0">
+          <h1 className="text-2xl sm:text-4xl font-bold text-gray-800 mb-1 sm:mb-2">🐾 SigaMyPet 🐾</h1>
+          <p className="text-sm sm:text-base text-gray-600">Descubra o humor dos pets pelo mapa interativo</p>
         </header>
 
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
-          <div className="lg:col-span-3">
-            <div className="bg-white rounded-2xl p-4 shadow-xl">
+        <div className="flex-1 grid grid-cols-1 xl:grid-cols-4 gap-3 sm:gap-6 min-h-0">
+          <div className="xl:col-span-3 flex flex-col min-h-0">
+            <div className="bg-white rounded-xl sm:rounded-2xl p-2 sm:p-4 shadow-xl flex-1 flex flex-col min-h-0 map-wrapper">
               <MapContainer 
                 center={[-23.5505, -46.6333]} 
                 zoom={13} 
-                style={{ height: '500px', width: '100%', borderRadius: '16px' }}
+                style={{ height: '100%', width: '100%', borderRadius: '0.75rem 1rem' }}
+                className="flex-1"
               >
                   <TileLayer
                     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -179,37 +181,37 @@ const DirectMap = () => {
             </div>
           </div>
 
-          <div className="lg:col-span-1">
-            <div className="bg-white rounded-2xl p-6 shadow-xl mb-4">
-                <h3 className="text-lg font-semibold text-gray-800 mb-4 text-center">
+          <div className="xl:col-span-1 flex flex-col lg:flex-row xl:flex-col gap-3 sm:gap-4 side-cards">
+            <div className="bg-white rounded-xl sm:rounded-2xl p-3 sm:p-6 shadow-xl flex-1 lg:max-w-xs xl:max-w-none pet-info-card">
+              <h3 className="text-sm sm:text-lg font-semibold text-gray-800 mb-2 sm:mb-4 text-center">
                 {selectedPet?.type === 'dog' ? 'Cachorro Animado' : 'Gato Animado'}
               </h3>
               <div className="flex justify-center">
-                <div className={`text-8xl ${getAnimalAnimation()}`}>
+                <div className={`text-4xl sm:text-8xl ${getAnimalAnimation()}`}>
                   {getAnimalEmoji()}
                 </div>
               </div>
-              <p className="text-center text-gray-600 mt-4 text-sm">
+              <p className="text-center text-gray-600 mt-2 sm:mt-4 text-xs sm:text-sm">
                 {selectedPet?.type === 'dog'
                   ? 'O cachorro reage ao humor do pet selecionado!'
                   : 'O gato reage ao humor do pet selecionado!'}
               </p>
             </div>
 
-            <div className="bg-white rounded-2xl p-6 shadow-xl">
-              <h3 className="text-lg font-semibold text-gray-800 mb-4">Legenda</h3>
-              <div className="space-y-2">
-                <div className="flex items-center gap-2">
-                  <div className="w-4 h-4 bg-green-500 rounded-full"></div>
-                  <span className="text-sm text-gray-600">Feliz 😊</span>
+            <div className="bg-white rounded-xl sm:rounded-2xl p-3 sm:p-6 shadow-xl flex-1 lg:max-w-xs xl:max-w-none">
+              <h3 className="text-sm sm:text-lg font-semibold text-gray-800 mb-2 sm:mb-4">Legenda</h3>
+              <div className="space-y-1 sm:space-y-2">
+                <div className="flex items-center gap-2 legend-item">
+                  <div className="w-3 sm:w-4 h-3 sm:h-4 bg-green-500 rounded-full"></div>
+                  <span className="text-xs sm:text-sm text-gray-600">Feliz 😊</span>
                 </div>
-                <div className="flex items-center gap-2">
-                  <div className="w-4 h-4 bg-blue-500 rounded-full"></div>
-                  <span className="text-sm text-gray-600">Triste 😢</span>
+                <div className="flex items-center gap-2 legend-item">
+                  <div className="w-3 sm:w-4 h-3 sm:h-4 bg-blue-500 rounded-full"></div>
+                  <span className="text-xs sm:text-sm text-gray-600">Triste 😢</span>
                 </div>
-                <div className="flex items-center gap-2">
-                  <div className="w-4 h-4 bg-red-500 rounded-full"></div>
-                  <span className="text-sm text-gray-600">Com raiva 😠</span>
+                <div className="flex items-center gap-2 legend-item">
+                  <div className="w-3 sm:w-4 h-3 sm:h-4 bg-red-500 rounded-full"></div>
+                  <span className="text-xs sm:text-sm text-gray-600">Com raiva 😠</span>
                 </div>
               </div>
             </div>
@@ -217,23 +219,23 @@ const DirectMap = () => {
         </div>
 
         {selectedPet && (
-          <div className="mt-6 bg-white rounded-2xl p-6 shadow-xl">
-            <h2 className="text-2xl font-bold text-gray-800 mb-4">
+          <div className="mt-3 sm:mt-6 bg-white rounded-xl sm:rounded-2xl p-3 sm:p-6 shadow-xl shrink-0">
+            <h2 className="text-lg sm:text-2xl font-bold text-gray-800 mb-2 sm:mb-4">
               {selectedPet.type === 'cat' ? '🐱' : '🐶'} {selectedPet.name}
             </h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 sm:gap-4">
               <div>
-                <h3 className="font-semibold text-gray-700 mb-2">Informações:</h3>
-                <p className="text-gray-600">{selectedPet.description}</p>
+                <h3 className="font-semibold text-gray-700 mb-1 sm:mb-2 text-sm sm:text-base">Informações:</h3>
+                <p className="text-xs sm:text-sm text-gray-600">{selectedPet.description}</p>
               </div>
               <div>
-                <h3 className="font-semibold text-gray-700 mb-2">Humor atual:</h3>
+                <h3 className="font-semibold text-gray-700 mb-1 sm:mb-2 text-sm sm:text-base">Humor atual:</h3>
                 <div className="flex items-center gap-2">
-                  <span className="text-2xl">
+                  <span className="text-lg sm:text-2xl">
                     {selectedPet.mood === 'happy' ? '😊' : 
                      selectedPet.mood === 'sad' ? '😢' : '😠'}
                   </span>
-                  <span className="text-gray-600 capitalize">
+                  <span className="text-xs sm:text-sm text-gray-600 capitalize">
                     {selectedPet.mood === 'happy' ? 'Feliz' : 
                      selectedPet.mood === 'sad' ? 'Triste' : 'Com raiva'}
                   </span>

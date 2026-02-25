@@ -1,0 +1,117 @@
+/* CSS customizado para responsividade do DirectMap */
+
+/* Container principal com viewport height */
+.direct-map-container {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* Mapa responsivo */
+.leaflet-container {
+  height: 100% !important;
+  width: 100% !important;
+}
+
+/* Animações dos pets */
+.cat-animation {
+  animation: bounce 2s infinite;
+}
+
+.cat-sad {
+  animation: wiggle 3s infinite;
+}
+
+.cat-angry {
+  animation: shake 0.5s infinite;
+}
+
+.dog-animation {
+  animation: wag 1s infinite;
+}
+
+.dog-sad {
+  animation: droop 2s infinite;
+}
+
+.dog-angry {
+  animation: growl 0.3s infinite;
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes wiggle {
+  0%, 100% { transform: rotate(0deg); }
+  25% { transform: rotate(-5deg); }
+  75% { transform: rotate(5deg); }
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-2px); }
+  75% { transform: translateX(2px); }
+}
+
+@keyframes wag {
+  0%, 100% { transform: rotate(0deg); }
+  25% { transform: rotate(-10deg); }
+  75% { transform: rotate(10deg); }
+}
+
+@keyframes droop {
+  0%, 100% { transform: translateY(0) scale(1); }
+  50% { transform: translateY(5px) scale(0.95); }
+}
+
+@keyframes growl {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+}
+
+/* Responsividade para diferentes tamanhos de tela */
+@media (max-width: 640px) {
+  .direct-map-container {
+    padding: 0.5rem;
+  }
+  
+  .pet-info-card {
+    padding: 0.75rem;
+  }
+  
+  .legend-item {
+    font-size: 0.75rem;
+  }
+}
+
+@media (min-width: 1024px) and (max-width: 1279px) {
+  .side-cards {
+    flex-direction: row !important;
+    gap: 1rem;
+  }
+  
+  .side-cards > div {
+    max-width: 320px;
+  }
+}
+
+@media (min-width: 1280px) {
+  .side-cards {
+    flex-direction: column !important;
+  }
+}
+
+/* Garantir que o mapa não ultrapasse a viewport */
+.map-wrapper {
+  max-height: calc(100vh - 200px);
+  min-height: 300px;
+}
+
+@media (max-width: 768px) {
+  .map-wrapper {
+    max-height: calc(100vh - 250px);
+  }
+}
