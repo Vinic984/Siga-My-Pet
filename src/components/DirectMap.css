@@ -1,187 +1,187 @@
-/* CSS customizado para responsividade e interação do DirectMap */
+/* Refatoração de Layout e Responsividade - SigaMyPet */
 
-/* Container principal com viewport height */
+/* Container principal com flexbox column */
 .direct-map-container {
   height: 100vh;
   display: flex;
   flex-direction: column;
   overflow: hidden;
+  padding: 0.5rem;
 }
 
-/* Mapa responsivo */
+/* Header compacto sem espaços mortos */
+.direct-map-header {
+  flex-shrink: 0;
+  text-align: center;
+  margin-bottom: 0.5rem;
+}
+
+.direct-map-header h1 {
+  font-size: 1.5rem;
+  margin-bottom: 0.25rem;
+}
+
+.direct-map-header p {
+  font-size: 0.75rem;
+  margin: 0;
+}
+
+/* Container principal com flex grow para o mapa */
+.main-content {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+}
+
+/* Mapa com 50vh fixo e flex grow */
+.map-section {
+  flex: 1;
+  min-height: 50vh;
+  max-height: 60vh;
+  position: relative;
+}
+
+.map-wrapper {
+  height: 100%;
+  width: 100%;
+  border-radius: 1rem;
+  overflow: hidden;
+}
+
 .leaflet-container {
   height: 100% !important;
   width: 100% !important;
 }
 
-/* Z-Index e Layering - Controles sempre acima */
-.leaflet-control-container {
-  z-index: 1000 !important;
+/* Card do Gato Interativo unificado com legenda */
+.interactive-pet-card {
+  position: relative;
+  background: white;
+  border-radius: 1rem;
+  padding: 1rem;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+  margin-top: 1rem;
+  max-width: 400px;
+  margin-left: auto;
+  margin-right: auto;
+  z-index: 50;
 }
 
-.leaflet-top,
-.leaflet-bottom {
-  z-index: 1001 !important;
+.interactive-pet-header {
+  text-align: center;
+  margin-bottom: 0.75rem;
 }
 
-.leaflet-control-zoom,
-.leaflet-control-attribution {
-  z-index: 1002 !important;
+.interactive-pet-header h3 {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #374151;
+  margin: 0;
 }
 
-/* Pop-ups com z-index controlado */
-.leaflet-popup {
-  z-index: 999 !important;
-}
-
-.leaflet-popup-content-wrapper {
-  z-index: 999 !important;
-}
-
-.leaflet-popup-content {
-  z-index: 999 !important;
-}
-
-/* Scroll independente para área de informações */
-.info-section {
-  overflow-y: auto;
-  max-height: 40vh;
-  scrollbar-width: thin;
-  scrollbar-color: rgba(156, 163, 175, 0.5) transparent;
-}
-
-.info-section::-webkit-scrollbar {
-  width: 6px;
-}
-
-.info-section::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-.info-section::-webkit-scrollbar-thumb {
-  background-color: rgba(156, 163, 175, 0.5);
-  border-radius: 3px;
-}
-
-/* Compactação de componentes para melhor usabilidade */
-
-/* Gato Animado - 30% menor */
-.pet-info-card {
-  padding: 1rem !important;
+.pet-emoji-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 0.75rem;
 }
 
 .pet-emoji {
-  font-size: 3rem !important; /* Reduzido de 4rem/8rem */
+  font-size: 2.5rem;
+  animation-duration: 2s;
+  animation-iteration-count: infinite;
 }
 
-.pet-info-card h3 {
-  font-size: 0.875rem !important; /* text-sm */
-  margin-bottom: 0.75rem !important;
+/* Legenda integrada na base do card */
+.integrated-legend {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid #e5e7eb;
+  margin-top: 0.5rem;
 }
 
-.pet-info-card p {
-  font-size: 0.75rem !important; /* text-xs */
-  margin-top: 0.75rem !important;
+.legend-item-compact {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-size: 0.625rem;
+  color: #6b7280;
 }
 
-/* Legenda compacta */
-.legend-compact {
-  padding: 1rem !important;
+.legend-color-dot {
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50%;
 }
 
-.legend-compact h3 {
-  font-size: 0.875rem !important; /* text-sm */
-  margin-bottom: 0.75rem !important;
-}
-
-.legend-compact .legend-item {
-  font-size: 0.75rem !important; /* text-xs */
-}
-
-.legend-compact .legend-color {
-  width: 0.5rem !important; /* w-2 */
-  height: 0.5rem !important; /* h-2 */
-}
-
-/* Layout lado a lado para economizar espaço */
-@media (min-width: 768px), (min-resolution: 120dpi) {
-  .side-cards-compact {
-    flex-direction: row !important;
-    gap: 1rem !important;
-  }
-  
-  .side-cards-compact > div {
-    flex: 1;
-    min-width: 200px;
-    max-width: 280px;
-  }
-  
-  .pet-emoji {
-    font-size: 2.5rem !important;
-  }
-}
-
-/* Área de informações com scroll limitado */
-.pet-details-section {
-  max-height: 25vh !important;
-  overflow-y: auto !important;
+/* Área de informações do pet com scroll controlado */
+.pet-info-section {
+  background: white;
+  border-radius: 1rem;
+  padding: 1rem;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+  margin-top: 1rem;
+  max-height: 25vh;
+  overflow-y: auto;
   scrollbar-width: thin;
   scrollbar-color: rgba(156, 163, 175, 0.3) transparent;
 }
 
-.pet-details-section::-webkit-scrollbar {
+.pet-info-section::-webkit-scrollbar {
   width: 4px;
 }
 
-.pet-details-section::-webkit-scrollbar-track {
+.pet-info-section::-webkit-scrollbar-track {
   background: transparent;
 }
 
-.pet-details-section::-webkit-scrollbar-thumb {
+.pet-info-section::-webkit-scrollbar-thumb {
   background-color: rgba(156, 163, 175, 0.3);
   border-radius: 2px;
 }
 
-/* Prevenir sobreposição de cliques */
-.compact-card {
-  position: relative;
-  z-index: 10;
+.pet-info-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
 }
 
-.compact-card::before {
-  content: '';
-  position: absolute;
-  top: -4px;
-  left: -4px;
-  right: -4px;
-  bottom: -4px;
-  z-index: -1;
-  pointer-events: none;
+.pet-info-header h2 {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #111827;
+  margin: 0;
 }
 
-/* Prioridade de clique para controles do mapa */
-.leaflet-control-container {
-  z-index: 1000 !important;
+.pet-info-content {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.75rem;
 }
 
-.compact-cards-container {
-  z-index: 50 !important;
+.pet-info-description {
+  font-size: 0.75rem;
+  line-height: 1.4;
+  color: #6b7280;
 }
 
-/* Ajustes para telas pequenas */
-@media (max-width: 767px) {
-  .side-cards-compact {
-    flex-direction: column !important;
-    gap: 0.75rem !important;
-  }
-  
-  .pet-emoji {
-    font-size: 2rem !important;
-  }
-  
-  .pet-details-section {
-    max-height: 30vh !important;
-  }
+.pet-mood-display {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.mood-emoji {
+  font-size: 1.25rem;
+}
+
+.mood-text {
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: #374151;
 }
 
 /* Animações dos pets */
@@ -211,96 +211,57 @@
 
 @keyframes bounce {
   0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-10px); }
+  50% { transform: translateY(-8px); }
 }
 
 @keyframes wiggle {
   0%, 100% { transform: rotate(0deg); }
-  25% { transform: rotate(-5deg); }
-  75% { transform: rotate(5deg); }
+  25% { transform: rotate(-3deg); }
+  75% { transform: rotate(3deg); }
 }
 
 @keyframes shake {
   0%, 100% { transform: translateX(0); }
-  25% { transform: translateX(-2px); }
-  75% { transform: translateX(2px); }
+  25% { transform: translateX(-1px); }
+  75% { transform: translateX(1px); }
 }
 
 @keyframes wag {
   0%, 100% { transform: rotate(0deg); }
-  25% { transform: rotate(-10deg); }
-  75% { transform: rotate(10deg); }
+  25% { transform: rotate(-8deg); }
+  75% { transform: rotate(8deg); }
 }
 
 @keyframes droop {
   0%, 100% { transform: translateY(0) scale(1); }
-  50% { transform: translateY(5px) scale(0.95); }
+  50% { transform: translateY(3px) scale(0.95); }
 }
 
 @keyframes growl {
   0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.1); }
+  50% { transform: scale(1.05); }
 }
 
-/* Responsividade para diferentes tamanhos de tela */
-@media (max-width: 640px) {
-  .direct-map-container {
-    padding: 0.5rem;
-  }
-  
-  .pet-info-card {
-    padding: 0.75rem;
-  }
-  
-  .legend-item {
-    font-size: 0.75rem;
-  }
-  
-  .info-section {
-    max-height: 35vh;
-  }
+/* Z-Index e Layering */
+.leaflet-control-container {
+  z-index: 1000 !important;
 }
 
-@media (min-width: 1024px) and (max-width: 1279px) {
-  .side-cards {
-    flex-direction: row !important;
-    gap: 1rem;
-  }
-  
-  .side-cards > div {
-    max-width: 320px;
-  }
+.leaflet-top,
+.leaflet-bottom {
+  z-index: 1001 !important;
 }
 
-@media (min-width: 1280px) {
-  .side-cards {
-    flex-direction: column !important;
-  }
+.leaflet-control-zoom,
+.leaflet-control-attribution {
+  z-index: 1002 !important;
 }
 
-/* Garantir que o mapa não ultrapasse a viewport */
-.map-wrapper {
-  max-height: calc(100vh - 200px);
-  min-height: 300px;
+.leaflet-popup {
+  z-index: 999 !important;
 }
 
-@media (max-width: 768px) {
-  .map-wrapper {
-    max-height: calc(100vh - 250px);
-  }
-}
-
-/* Prevenir event bubbling em pop-ups */
-.popup-content {
-  pointer-events: auto;
-  user-select: text;
-}
-
-.leaflet-popup-content {
-  pointer-events: auto;
-}
-
-/* Estilos customizados para pop-ups */
+/* Pop-ups customizados */
 .custom-popup .leaflet-popup-content-wrapper {
   border-radius: 12px;
   box-shadow: 0 4px 20px rgba(0,0,0,0.15);
@@ -312,20 +273,12 @@
   min-width: 200px;
 }
 
-.custom-popup .leaflet-popup-close-button {
-  color: #6b7280;
-  font-size: 20px;
-  line-height: 20px;
-  padding: 8px;
-  right: 8px;
-  top: 8px;
+.popup-content {
+  pointer-events: auto;
+  user-select: text;
 }
 
-.custom-popup .leaflet-popup-close-button:hover {
-  color: #374151;
-}
-
-/* Botões flutuantes personalizados */
+/* Botões flutuantes */
 .floating-controls {
   position: fixed;
   top: 50%;
@@ -353,18 +306,45 @@
   box-shadow: 0 4px 12px rgba(0,0,0,0.2);
 }
 
-/* Overlay para prevenir cliques indesejados */
-.map-overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  z-index: 1;
-  pointer-events: none;
+/* Responsividade para dispositivos móveis */
+@media (max-width: 640px) {
+  .direct-map-container {
+    padding: 0.25rem;
+  }
+  
+  .direct-map-header h1 {
+    font-size: 1.25rem;
+  }
+  
+  .interactive-pet-card {
+    margin: 0.75rem 0.5rem 0;
+    padding: 0.75rem;
+  }
+  
+  .pet-emoji {
+    font-size: 2rem;
+  }
+  
+  .integrated-legend {
+    gap: 0.75rem;
+  }
+  
+  .pet-info-section {
+    margin: 0.75rem 0.5rem 0;
+    max-height: 20vh;
+  }
 }
 
-.map-overlay.active {
-  pointer-events: auto;
-  background: rgba(0,0,0,0.1);
+@media (max-width: 480px) {
+  .map-section {
+    max-height: 55vh;
+  }
+  
+  .interactive-pet-card {
+    max-width: none;
+  }
+  
+  .legend-item-compact {
+    font-size: 0.5rem;
+  }
 }

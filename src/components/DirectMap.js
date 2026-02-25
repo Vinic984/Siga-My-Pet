@@ -171,151 +171,150 @@ const DirectMap = () => {
   };
 
   return (
-    <div className="direct-map-container min-h-screen bg-gradient-to-br from-pastel-blue to-pastel-pink p-1 sm:p-4">
-      <div className="max-w-7xl mx-auto h-full flex flex-col">
-        <header className="text-center mb-3 sm:mb-6 shrink-0">
-          <h1 className="text-xl sm:text-4xl font-bold text-gray-800 mb-1 sm:mb-2">🐾 SigaMyPet 🐾</h1>
-          <p className="text-xs sm:text-base text-gray-600">Descubra o humor dos pets pelo mapa interativo</p>
-        </header>
+    <div className="direct-map-container bg-gradient-to-br from-pastel-blue to-pastel-pink">
+      {/* Header compacto sem espaços mortos */}
+      <header className="direct-map-header">
+        <h1 className="text-gray-800 font-bold">🐾 SigaMyPet 🐾</h1>
+        <p className="text-gray-600">Descubra o humor dos pets pelo mapa interativo</p>
+      </header>
 
-        <div className="flex-1 grid grid-cols-1 xl:grid-cols-4 gap-2 sm:gap-6 min-h-0">
-          <div className="xl:col-span-3 flex flex-col min-h-0">
-            <div className="bg-white rounded-xl sm:rounded-2xl p-2 sm:p-4 shadow-xl flex-1 flex flex-col min-h-0 map-wrapper">
-              <MapContainer 
-                center={[-23.5505, -46.6333]} 
-                zoom={13} 
-                style={{ height: '100%', width: '100%', borderRadius: '0.75rem 1rem' }}
-                className="flex-1"
-                ref={mapRef}
-                whenCreated={(map) => {
-                  mapRef.current = map;
-                  // Configurar opções de popup para melhor controle
-                  map.options.closePopupOnClick = false;
-                }}
-              >
-                  <TileLayer
-                    url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                    attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-                  />
-                  {pets.map((pet) => (
-                    <Marker
-                      key={pet.id}
-                      position={pet.position}
-                      icon={createCustomIcon(pet.type, pet.mood)}
-                      eventHandlers={{
-                        click: () => handlePetClick(pet)
-                      }}
+      {/* Container principal com flex grow para o mapa */}
+      <div className="main-content">
+        {/* Mapa com 50vh fixo e flex grow */}
+        <div className="map-section">
+          <div className="map-wrapper bg-white shadow-xl">
+            <MapContainer 
+              center={[-23.5505, -46.6333]} 
+              zoom={13} 
+              style={{ height: '100%', width: '100%', borderRadius: '1rem' }}
+              ref={mapRef}
+              whenCreated={(map) => {
+                mapRef.current = map;
+                map.options.closePopupOnClick = false;
+              }}
+            >
+              <TileLayer
+                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+              />
+              {pets.map((pet) => (
+                <Marker
+                  key={pet.id}
+                  position={pet.position}
+                  icon={createCustomIcon(pet.type, pet.mood)}
+                  eventHandlers={{
+                    click: () => handlePetClick(pet)
+                  }}
+                >
+                  <Popup 
+                    autoPan={false}
+                    closeButton={true}
+                    minWidth={200}
+                    maxWidth={250}
+                    className="custom-popup"
+                  >
+                    <div 
+                      className="popup-content text-center p-3 cursor-default"
+                      onClick={handlePopupClick}
+                      onMouseDown={handlePopupClick}
                     >
-                      <Popup 
-                        autoPan={false}
-                        closeButton={true}
-                        minWidth={200}
-                        maxWidth={250}
-                        className="custom-popup"
-                      >
-                        <div 
-                          className="popup-content text-center p-3 cursor-default"
-                          onClick={handlePopupClick}
-                          onMouseDown={handlePopupClick}
-                        >
-                          <div className="text-2xl mb-2">
-                            {pet.type === 'cat' ? '🐱' : '🐶'}
-                          </div>
-                          <p className="font-semibold text-gray-800 text-sm mb-1">{pet.name}</p>
-                          <p className="text-xs text-gray-600 leading-relaxed">{pet.message}</p>
-                          <div className="mt-2 pt-2 border-t border-gray-200">
-                            <span className={`inline-block px-2 py-1 rounded-full text-xs font-medium ${
-                              pet.mood === 'happy' ? 'bg-green-100 text-green-800' :
-                              pet.mood === 'sad' ? 'bg-blue-100 text-blue-800' :
-                              'bg-red-100 text-red-800'
-                            }`}>
-                              {pet.mood === 'happy' ? '😊 Feliz' :
-                               pet.mood === 'sad' ? '😢 Triste' :
-                               '😠 Com raiva'}
-                            </span>
-                          </div>
-                        </div>
-                      </Popup>
-                    </Marker>
-                  ))}
-                </MapContainer>
+                      <div className="text-2xl mb-2">
+                        {pet.type === 'cat' ? '🐱' : '🐶'}
+                      </div>
+                      <p className="font-semibold text-gray-800 text-sm mb-1">{pet.name}</p>
+                      <p className="text-xs text-gray-600 leading-relaxed">{pet.message}</p>
+                      <div className="mt-2 pt-2 border-t border-gray-200">
+                        <span className={`inline-block px-2 py-1 rounded-full text-xs font-medium ${
+                          pet.mood === 'happy' ? 'bg-green-100 text-green-800' :
+                          pet.mood === 'sad' ? 'bg-blue-100 text-blue-800' :
+                          'bg-red-100 text-red-800'
+                        }`}>
+                          {pet.mood === 'happy' ? '😊 Feliz' :
+                           pet.mood === 'sad' ? '😢 Triste' :
+                           '😠 Com raiva'}
+                        </span>
+                      </div>
+                    </div>
+                  </Popup>
+                </Marker>
+              ))}
+            </MapContainer>
+          </div>
+        </div>
+
+        {/* Card do Gato Interativo unificado com legenda */}
+        <div className="interactive-pet-card">
+          <div className="interactive-pet-header">
+            <h3>
+              {selectedPet?.type === 'dog' ? 'Cachorro Interativo' : 'Gato Interativo'}
+            </h3>
+          </div>
+          <div className="pet-emoji-container">
+            <div className={`pet-emoji ${getAnimalAnimation()}`}>
+              {getAnimalEmoji()}
             </div>
           </div>
-
-          <div className="xl:col-span-1 flex flex-col lg:flex-row xl:flex-col gap-2 sm:gap-4 side-cards-compact compact-cards-container">
-            <div className="bg-white rounded-xl sm:rounded-2xl p-3 sm:p-6 shadow-xl flex-1 lg:max-w-xs xl:max-w-none pet-info-card compact-card">
-              <h3 className="text-sm sm:text-lg font-semibold text-gray-800 mb-2 sm:mb-4 text-center">
-                {selectedPet?.type === 'dog' ? 'Cachorro Animado' : 'Gato Animado'}
-              </h3>
-              <div className="flex justify-center">
-                <div className={`text-3xl sm:text-6xl lg:text-4xl xl:text-6xl pet-emoji ${getAnimalAnimation()}`}>
-                  {getAnimalEmoji()}
-                </div>
-              </div>
-              <p className="text-center text-gray-600 mt-2 sm:mt-4 text-xs sm:text-sm">
-                {selectedPet?.type === 'dog'
-                  ? 'O cachorro reage ao humor do pet selecionado!'
-                  : 'O gato reage ao humor do pet selecionado!'}
-              </p>
+          <p className="text-center text-gray-600 text-xs">
+            {selectedPet?.type === 'dog'
+              ? 'O cachorro reage ao humor do pet selecionado!'
+              : 'O gato reage ao humor do pet selecionado!'}
+          </p>
+          
+          {/* Legenda integrada na base do card */}
+          <div className="integrated-legend">
+            <div className="legend-item-compact">
+              <div className="legend-color-dot bg-green-500"></div>
+              <span>Feliz 😊</span>
             </div>
-
-            <div className="bg-white rounded-xl sm:rounded-2xl p-3 sm:p-6 shadow-xl flex-1 lg:max-w-xs xl:max-w-none legend-compact compact-card">
-              <h3 className="text-sm sm:text-lg font-semibold text-gray-800 mb-2 sm:mb-4">Legenda</h3>
-              <div className="space-y-1 sm:space-y-2 flex flex-col sm:block">
-                <div className="flex items-center gap-2 legend-item">
-                  <div className="w-2 sm:w-4 h-2 sm:h-4 bg-green-500 rounded-full legend-color"></div>
-                  <span className="text-xs sm:text-sm text-gray-600">Feliz 😊</span>
-                </div>
-                <div className="flex items-center gap-2 legend-item">
-                  <div className="w-2 sm:w-4 h-2 sm:h-4 bg-blue-500 rounded-full legend-color"></div>
-                  <span className="text-xs sm:text-sm text-gray-600">Triste 😢</span>
-                </div>
-                <div className="flex items-center gap-2 legend-item">
-                  <div className="w-2 sm:w-4 h-2 sm:h-4 bg-red-500 rounded-full legend-color"></div>
-                  <span className="text-xs sm:text-sm text-gray-600">Com raiva 😠</span>
-                </div>
-              </div>
+            <div className="legend-item-compact">
+              <div className="legend-color-dot bg-blue-500"></div>
+              <span>Triste 😢</span>
+            </div>
+            <div className="legend-item-compact">
+              <div className="legend-color-dot bg-red-500"></div>
+              <span>Raiva 😠</span>
             </div>
           </div>
         </div>
 
-        {/* Botões flutuantes com z-index alto */}
-        <div className="floating-controls">
-          <button
-            onClick={resetMap}
-            className="floating-control-btn"
-            title="Redefinir mapa"
-          >
-            🔄
-          </button>
-        </div>
-
+        {/* Área de informações do pet com scroll controlado */}
         {selectedPet && (
-          <div className="mt-2 sm:mt-6 bg-white rounded-xl sm:rounded-2xl p-3 sm:p-6 shadow-xl shrink-0 pet-details-section">
-            <h2 className="text-lg sm:text-2xl font-bold text-gray-800 mb-2 sm:mb-4">
-              {selectedPet.type === 'cat' ? '🐱' : '🐶'} {selectedPet.name}
-            </h2>
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 sm:gap-4">
+          <div className="pet-info-section">
+            <div className="pet-info-header">
+              <span className="text-xl">
+                {selectedPet.type === 'cat' ? '🐱' : '🐶'}
+              </span>
+              <h2>{selectedPet.name}</h2>
+            </div>
+            <div className="pet-info-content">
               <div>
-                <h3 className="font-semibold text-gray-700 mb-1 sm:mb-2 text-sm sm:text-base">Informações:</h3>
-                <p className="text-xs sm:text-sm text-gray-600 leading-relaxed">{selectedPet.description}</p>
+                <h3 className="font-semibold text-gray-700 text-sm mb-1">Informações:</h3>
+                <p className="pet-info-description">{selectedPet.description}</p>
               </div>
-              <div>
-                <h3 className="font-semibold text-gray-700 mb-1 sm:mb-2 text-sm sm:text-base">Humor atual:</h3>
-                <div className="flex items-center gap-2">
-                  <span className="text-lg sm:text-2xl">
-                    {selectedPet.mood === 'happy' ? '😊' : 
-                     selectedPet.mood === 'sad' ? '😢' : '😠'}
-                  </span>
-                  <span className="text-xs sm:text-sm text-gray-600 capitalize">
-                    {selectedPet.mood === 'happy' ? 'Feliz' : 
-                     selectedPet.mood === 'sad' ? 'Triste' : 'Com raiva'}
-                  </span>
-                </div>
+              <div className="pet-mood-display">
+                <span className="mood-emoji">
+                  {selectedPet.mood === 'happy' ? '😊' : 
+                   selectedPet.mood === 'sad' ? '😢' : '😠'}
+                </span>
+                <span className="mood-text capitalize">
+                  {selectedPet.mood === 'happy' ? 'Feliz' : 
+                   selectedPet.mood === 'sad' ? 'Triste' : 'Com raiva'}
+                </span>
               </div>
             </div>
           </div>
         )}
+      </div>
+
+      {/* Botões flutuantes com z-index alto */}
+      <div className="floating-controls">
+        <button
+          onClick={resetMap}
+          className="floating-control-btn"
+          title="Redefinir mapa"
+        >
+          🔄
+        </button>
       </div>
     </div>
   );
